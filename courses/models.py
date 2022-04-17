@@ -5,6 +5,7 @@ from django.db import models
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
     price = models.IntegerField()
     discount = models.IntegerField(blank=True)
@@ -13,6 +14,9 @@ class Course(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     resource = models.FileField(upload_to='resource/')
     length = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(models.Model):
@@ -24,6 +28,18 @@ class Prerequisite(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     description = models.CharField(max_length=100)
 
+
 class Learning(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     description = models.CharField(max_length=100)
+
+
+class Video(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    serial_no = models.IntegerField()
+    is_preview = models.BooleanField(default=False)
+    video_id = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
