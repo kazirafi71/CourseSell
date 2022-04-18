@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 # Create your models here.
 
@@ -12,7 +13,7 @@ class Course(models.Model):
     active = models.BooleanField(default=False)
     thumbnail = models.ImageField(upload_to='courses/', blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    resource = models.FileField(upload_to='resource/')
+    resource = models.FileField(upload_to='resource/', blank=True)
     length = models.IntegerField()
 
     def __str__(self):
